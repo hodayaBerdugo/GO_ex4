@@ -1,11 +1,16 @@
-package BusinessLogic
+package DataBase
 
 import (
-	"GO_ex4/DataModel"
 	"database/sql"
+	"ex4/DataModel"
 )
 
-func saveUserDetails(user DataModel.User) {
+func GetUserById(user_id int) DataModel.User {
+
+	return *DataModel.NewUser(1)
+}
+
+func SaveUserDetailsToDB(user DataModel.User) {
 
 	//connect to db
 	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)")
