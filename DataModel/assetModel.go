@@ -1,19 +1,33 @@
 package DataModel
 
-type Asset struct {
-	location string
-	meters   int
-	rooms    int
-	floor    int
-	price    int
+//import _ "container/list"
 
-	//	func(i *Asset) String() string {
-	//	return strconv.itoa(i)
-	//}
+type Asset struct {
+	Location string
+	Meters   int
+	Rooms    int
+	Floor    int
+	Price    int
+	Valid    int
+	Types    []int
+	User     User
 }
 
-//
-//type Asset struct {
-//	name string
-//	age  int
-//}
+func NewAsset(rooms int, price int, valid int) *Asset {
+	return &Asset{Rooms: rooms, Price: price, Valid: valid}
+}
+
+//update asset price
+func UpdatePrice(asset Asset, price int) {
+	asset.Price = price
+}
+
+//set asset as valid - means that it will show up in search results
+func SetAssetAsValid(asset Asset) {
+	asset.Valid = 1
+}
+
+//set asset as valid - means that it won't show up in search results
+func SetAssetAsNotValid(asset Asset) {
+	asset.Valid = 0
+}

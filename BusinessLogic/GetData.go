@@ -1,11 +1,12 @@
 package BusinessLogic
 
 import (
+	"GO_ex4/DataModel"
 	"database/sql"
 	"log"
 )
 
-func getDataByCriteria(asset assetModel) *Rows {
+func getDataByCriteria(asset DataModel.Asset) DataModel.Post {
 	//open db connection
 
 	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)")
@@ -16,16 +17,16 @@ func getDataByCriteria(asset assetModel) *Rows {
 	defer db.Close()
 
 	// Execute the query
-	results, err := db.Query("SELECT * FROM assets a where a.rooms = {0} and price <= {1} and a.location LIKE '%{2}%' and typeId in {3};", asset.rooms, asset.price, asset.location, asset.types)
+	results, err := db.Query("SELECT * FROM assets a where a.rooms = {0} and price <= {1} and a.location LIKE '%{2}%' and typeId in {3};", asset.Rooms, asset.Price, asset.Location, asset.Types)
 
 	if err != nil {
 		panic(err.Error())
 	}
-
-	return results
+	results.Close()
+	return *DataModel.NewPost(1, "sss")
 }
 
-func getAllLocations() *Rows {
+func getAllLocations() []string {
 	//open db connection
 
 	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)")
@@ -42,10 +43,14 @@ func getAllLocations() *Rows {
 		panic(err.Error())
 	}
 
-	return results
+	if err != nil {
+		panic(err.Error())
+	}
+	results.Close()
+	return []string{"ds", "dd"}
 }
 
-func getUserSavedPosts(user userModel) *Rows {
+func getUserSavedPosts(user DataModel.User) DataModel.Post {
 	//open db connection
 
 	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)")
@@ -62,10 +67,11 @@ func getUserSavedPosts(user userModel) *Rows {
 		panic(err.Error())
 	}
 
-	return results
+	results.Close()
+	return *DataModel.NewPost(1, "sss")
 }
 
-func getAllAssets() *Rows {
+func getAllAssets() DataModel.Asset {
 	//open db connection
 
 	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)")
@@ -81,6 +87,6 @@ func getAllAssets() *Rows {
 	if err != nil {
 		panic(err.Error())
 	}
-
-	return results
+	results.Close()
+	return *DataModel.NewAsset(4, 1250000, 1)
 }
